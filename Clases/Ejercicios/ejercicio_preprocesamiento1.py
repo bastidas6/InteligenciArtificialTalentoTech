@@ -47,10 +47,43 @@ from sklearn.impute import SimpleImputer
 
 imp = SimpleImputer(strategy='mean')
 df['Age'] = imp.fit_transform(df[['Age']])
-
 print("\nValores nulos\n", df.isna().sum())
 
 #Eliminar fila donde el fare es invalido
-df.dropna(axis=0, how='Any')
+#Con el inplace = True, se elimina la fila y se refleja en el dataset
+df.dropna(axis=0, how='any', subset=['Fare'], inplace=True)
+print("\nValores nulos\n", df.isna().sum())
 
 
+#Eliminar columnas innecesarias con drop
+print(df.columns)
+df.drop(columns=['PassengerId','Name','Ticket','Cabin'],inplace=True)
+print("\nDataFrame con columnas eliminadas\n", df.head(3))
+
+
+#Se transforman y/o se categorizan las variables categoricas
+
+#Se transforma columna Sex
+#print(df['Sex'].unique())  #Conocer posibles valores que puede tener la columna sex
+diccionario_sex = {'male':1, 'female':2}
+df['Sex'] = df['Sex'].map(diccionario_sex)
+print("\nDataFrame con la columna sex transformada\n", df.head(3))
+
+#Se transofrma columnas Embarked
+#print(df['Embarked'].unique())  #Conocer los posibles valores que puede tener la columna Embarked
+#diccionario_embarked = {'Q':1, 'S':2, 'C':3}
+#df['Embarked'] = df['Embarked'].map(diccionario_embarked)
+#print("\nDataFrame con la columna Embarked transofrmada\n", df.head(3))
+
+
+valores_posibles_embarked = df['Embarked'].unique()
+diccionario_embarked = {}
+contador_embarked = 1
+for item in valores_posibles_embarked:
+    diccionario_embarked[item] = contador_embarked
+    contador_embarked +=1
+
+print(diccionario_embarked)
+
+df['Embarked'] = df['Embarked'].map(diccionario_embarked)
+print("\nDataFrame con la columna Embarked transofrmada\n", df.head(3))
