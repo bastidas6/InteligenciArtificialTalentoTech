@@ -19,21 +19,22 @@ df = pd.read_csv("Datasets/Salary_Data.csv")
 print(df.tail())
 
 # Caracteristicas o variables independientes
-X = df[['YearsExperience']].values
+X = df[['YearsExperience']].values #Esto devuelvo toda la columna de YearsExperience.
+
 # Variable dependiente u objetivo
-y = df.Salary
+y = df.Salary #Esto me devuelve toda la columna de Salary
 
 
 from sklearn.model_selection import train_test_split
 # separación de los datos en conjuntos de entrenamiento y pruebas
-X_entren, X_prueba, y_entren, y_prueba = train_test_split(X, y, test_size=0.20, random_state=0)
-print(X_entren.shape, X_prueba.shape, y_entren.shape, y_prueba.shape)
+X_entren, X_prueba, y_entren, y_prueba = train_test_split(X, y, test_size=0.20, random_state=0) #El 20% de los datos se van para datos de prueba.
+print("X de entrenamiento:", X_entren.shape,"\n X de prueba: ", X_prueba.shape,"\nY de entrenamiento: ", y_entren.shape,"\n Y de prueba: ", y_prueba.shape)
 
 
 from sklearn.linear_model import LinearRegression
 reg_lin = LinearRegression()
 print(reg_lin.fit(X_entren, y_entren))
-print(reg_lin.intercept_, reg_lin.coef_[0])
+print("Intercepto con el eje X: ", reg_lin.intercept_, "Coeficiente[0]: ", reg_lin.coef_[0])
 
 predicciones = reg_lin.predict(X_prueba)
 print(predicciones)
@@ -63,6 +64,9 @@ print(f'El Error cuadrático medio es: {round(mse, 2)}')
 from sklearn.metrics import  r2_score
 exactitud = r2_score(y_prueba, predicciones)
 print(f'La exactitud es: {round(exactitud, 2)}')
+
+valor_y = reg_lin.intercept_ + reg_lin.coef_[0]*9.7
+print("El valor predictorio es: ", valor_y)
 
 
 
