@@ -42,7 +42,7 @@ X = df.iloc[:,[0,2,4]]
 y = df.iloc[:,5]
 
 
-X_ent, X_pru, y_ent, y_pru = train_test_split(X, y, test_size=0.2, random_state=1)
+X_ent, X_pru, y_ent, y_pru = train_test_split(X, y, test_size=0.2, random_state=1) #El 20% de los datos se van para el conjunto de pruebas
 
 reg = LinearRegression()
 reg.fit(X_ent, y_ent)
