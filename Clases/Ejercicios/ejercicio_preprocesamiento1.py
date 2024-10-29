@@ -87,3 +87,40 @@ print(diccionario_embarked)
 
 df['Embarked'] = df['Embarked'].map(diccionario_embarked)
 print("\nDataFrame con la columna Embarked transofrmada\n", df.head(3))
+
+#Escoger X y y
+X = df.iloc[:, 1:]
+y = df.iloc[:, 0]
+
+# Separar los datos en conjunto de entrenamiento y pruebas
+from sklearn.model_selection import train_test_split
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=1000)
+X_train.shape, X_test.shape, y_train.shape, y_test.shape
+
+
+from sklearn.preprocessing import StandardScaler
+est_esc = StandardScaler()
+est_esc.fit(X_train)
+X_ent_est = est_esc.transform(X_train)
+X_pru_est = est_esc.transform(X_test)
+print(X_ent_est[0])
+
+
+# 2. aplicamos el algoritmo PCA
+from sklearn.decomposition import PCA
+pca = PCA(n_components=3)
+X_ent_pca = pca.fit_transform(X_ent_est)
+
+
+print(pca.components_)
+
+pca_df = pd.DataFrame(pca.components_.T,  columns=["PC1", "PC2", "PC3"])
+print(pca_df)
+
+pca_df = pd.DataFrame(pca.components_.T,  columns=["PC1", "PC2", "PC3"])
+print(pca_df)
+
+import matplotlib.pyplot as plt
+plt.figure(figsize=(5,4))
+plt.bar(range(1,len(pca.explained_variance_ratio_)+1), pca.explained_variance_ratio_)
