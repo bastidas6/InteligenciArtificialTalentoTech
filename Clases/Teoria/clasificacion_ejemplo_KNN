@@ -1,0 +1,40 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+from sklearn.metrics import accuracy_score
+
+
+df = pd.read_csv("Datasets/diabetes.csv")
+print(df.head(5))
+
+
+# seleccionamos edad y nivel de glucosa para X y diabetes para y
+X = df.iloc[:, [1,7]].values
+y = df.iloc[:, 8].values
+
+# se separan los datos en conjunto de entrenamiento y pruebas
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 47)
+
+from sklearn.neighbors import KNeighborsClassifier
+knn=KNeighborsClassifier(n_neighbors=10, metric="minkowski", p=2)
+knn.fit(X_train,y_train)
+
+y_pred = knn.predict(X_test)
+print(f"Exactitud: {accuracy_score(y_test, y_pred):.2f}")
+
+ejemplo = np.array([[50, 130]])
+
+plt.figure(figsize=(6,4)) 
+plt.scatter(X_test[y_test == 1, 0], X_test[y_test == 1, 1], c='red', marker='s', label='Diabetes')
+plt.scatter(X_test[y_test == 0, 0], X_test[y_test == 0, 1], c='blue', marker='o', label='NO diabetes')
+plt.scatter(ejemplo[0][0],ejemplo[0][1], color = 'black')
+
+plt.xlabel('Edad')
+plt.ylabel('Nivel de glucosa')
+plt.legend(loc='best')
+plt.tight_layout()
+plt.show()
+
+p = knn.predict(ejemplo)[0]
+print(f"Predicción para la instancia de prueba: {'Diabetes' if p == 1 else 'No Diabetes'}")
