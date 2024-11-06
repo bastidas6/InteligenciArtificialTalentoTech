@@ -1,0 +1,11 @@
+Edad,Género,Promedio,Trabaja,Ingresos,Deserción
+28,M,4.0,NO,2,NO
+29,F,4.0,NO,3,NO
+28,M,4.0,SI,3,SI
+30,M,4.0,SI,2,SI
+29,F,3.0,SI,4,SI
+32,M,3.0,NO,4,SI
+35,F,4.0,NO,5,SI
+28,M,3.0,SI,3,SI
+25,M,5.0,SI,3,SI
+28,F,4.0,NO,4,NO
